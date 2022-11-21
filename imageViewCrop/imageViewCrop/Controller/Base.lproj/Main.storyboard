@@ -16,34 +16,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofq-iR-Sby" customClass="ImageCropView" customModule="imageViewCrop" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofq-iR-Sby">
                                 <rect key="frame" x="0.0" y="59" width="393" height="360"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="360" id="fbe-OJ-Ivm"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="26"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1XO-QH-YEu">
-                                <rect key="frame" x="16.000000000000007" y="427" width="97.666666666666686" height="50"/>
+                                <rect key="frame" x="16" y="427" width="85.333333333333329" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="VNa-OQ-wR6"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Crop" cornerStyle="large">
-                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="30"/>
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="CropButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="m0k-c6-TOS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bn-6R-JMF">
-                                <rect key="frame" x="265.66666666666669" y="427" width="111.33333333333331" height="50"/>
+                                <rect key="frame" x="280.33333333333331" y="427" width="96.666666666666686" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bNd-Il-6I8"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="tinted" title="Reset" cornerStyle="large">
-                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="30"/>
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="25"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="resetHome:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HBk-QG-Qeu"/>
@@ -84,6 +87,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="26" width="1920" height="1440"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
