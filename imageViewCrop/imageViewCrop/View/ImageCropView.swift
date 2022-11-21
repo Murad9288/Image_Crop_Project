@@ -431,7 +431,10 @@ extension ImageCropView : UIScrollViewDelegate{
         if scrollView.zoomScale <= 1 {
             let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) * 0.5, 0)
             let offsetY = max((scrollView.bounds.height - scrollView.contentSize.height) * 0.5, 0)
-            scrollView.contentInset = UIEdgeInsets(top: offsetY, left: offsetX, bottom: 0, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: offsetY,
+                                                   left: offsetX,
+                                                   bottom: 0,
+                                                   right: 0)
             
         } else {
             
@@ -442,28 +445,44 @@ extension ImageCropView : UIScrollViewDelegate{
                 
                 if imageOffset > scrollOffset {
                     
-                    scrollView.contentInset = UIEdgeInsets(top: imageOffset, left: 0, bottom: imageOffset, right: 0)
+                    scrollView.contentInset = UIEdgeInsets(top: imageOffset,
+                                                           left: 0,
+                                                           bottom: imageOffset,
+                                                           right: 0)
                     
                 } else {
-                    scrollView.contentInset = UIEdgeInsets(top: scrollOffset, left: 0, bottom: scrollOffset, right: 0)
+                    scrollView.contentInset = UIEdgeInsets(top: scrollOffset,
+                                                           left: 0,
+                                                           bottom: scrollOffset,
+                                                           right: 0)
                 }
                 
             } else {
                 
                 let imageOffset = -imageSize.origin.x
                 let scrollOffset = (scrollView.bounds.width - scrollView.contentSize.width) * 0.5
+                
                 if imageOffset > scrollOffset {
-                    scrollView.contentInset = UIEdgeInsets(top: 0, left: imageOffset, bottom: 0, right: imageOffset)
+                    scrollView.contentInset = UIEdgeInsets(top: 0,
+                                                           left: imageOffset,
+                                                           bottom: 0,
+                                                           right: imageOffset)
                     
                 } else {
                     
-                    scrollView.contentInset = UIEdgeInsets(top: 0, left: scrollOffset, bottom: 0, right: scrollOffset)
+                    scrollView.contentInset = UIEdgeInsets(top: 0,
+                                                           left: scrollOffset,
+                                                           bottom: 0,
+                                                           right: scrollOffset)
                 }
             }
         }
     }
     
-    public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+    public func scrollViewDidEndZooming(_ scrollView: UIScrollView,
+                                        with view: UIView?,
+                                        atScale scale: CGFloat) {
+        
         cropLeadingInitialConstraint?.constant = 0
         cropTrailingInitialConstraint?.constant = 0
         cropTopInitialConstraint?.constant = 0
@@ -472,6 +491,27 @@ extension ImageCropView : UIScrollViewDelegate{
 
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
+    }
+}
+
+// MARK: Private Method Image
+extension ImageCropView {
+    // Modify the contentOffset of the scrollView so that the scroll view fills the image.
+    private func imageRealSize(_ animated: Bool = false) {
+        if imageView.image == nil { return }
+        scrollView.setZoomScale(1, animated: false)
+        
+        let imageSize = imageView.frameForImageInImageViewAspectFit
+        let widthRate =  bounds.width / imageSize.width
+        let heightRate = bounds.height / imageSize.height
+        if widthRate < heightRate {
+            scrollView.setZoomScale(heightRate, animated: animated)
+        } else {
+            scrollView.setZoomScale(widthRate, animated: animated)
+        }
+        let x = scrollView.contentSize.width/2 - scrollView.bounds.size.width/2
+        let y = scrollView.contentSize.height/2 - scrollView.bounds.size.height/2
+        scrollView.contentOffset = CGPoint(x: x, y: y)
     }
 }
 
@@ -502,7 +542,9 @@ extension ImageCropView {
          imageAdjustment(point, duration: duration, animated: animated)
      }
     
-    func imageAdjustment(_ point: CGPoint, duration: TimeInterval = 0.4, animated: Bool) {
+    func imageAdjustment(_ point: CGPoint,
+                         duration: TimeInterval = 0.4,
+                         animated: Bool) {
         
         cropLeadingConstraint?.constant = -point.x
         cropTrailingConstraint?.constant = point.x
@@ -514,7 +556,11 @@ extension ImageCropView {
         cropBottomInitialConstraint?.constant = point.y
         
         if animated {
-            UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+            UIView.animate(withDuration: duration,
+                           delay: 0,
+                           options: UIView.AnimationOptions.curveEaseInOut,
+                           animations: {
+                
                 self.layoutIfNeeded()
                 self.scrollView.layoutIfNeeded()
                 self.scrollView.updateConstraintsIfNeeded()
@@ -1208,6 +1254,31 @@ class CropDimView: UIView {
 // MARK: Private Method Touch Action
 
 extension ImageCropView {
+    
+    // Center Button Double Tap
+    @objc private func centerDoubleTap(_ sender: UITapGestureRecognizer) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.imageDoubleTap(sender)
+        }
+    }
+    
+    // ImageView Double Tap
+    @objc private func imageDoubleTap(_ sender: UITapGestureRecognizer) {
+        if scrollView.zoomScale == 1 {
+            imageRealSize(true)
+            DispatchQueue.main.async {
+                self.imageMaxAdjustment(animated: true)
+            }
+        } else {
+            scrollView.setZoomScale(1, animated: true)
+            DispatchQueue.main.async {
+                self.imageMinAdjustment(animated: true)
+            }
+        }
+    }
+    
+    
+    
     @objc func cropButtonCenterDragEnded(_ sender: LineButton, forEvent event: UIEvent){
         cropLineColor = UIColor.red.withAlphaComponent(0.7)
         
@@ -1217,27 +1288,39 @@ extension ImageCropView {
         
         guard let cropLeadingConstraint = cropLeadingConstraint,
             let cropTrailingConstraint = cropTrailingConstraint,
-            let cropTopConstraint =  cropTopConstraint,
-            let cropBottomConstraint =  cropBottomConstraint else {
-                return
-        }
-        
+            let cropTopConstraint = cropTopConstraint,
+            let cropBottomConstraint = cropBottomConstraint else { return }
         guard let touchPoint = lineButtonTouchPoint,
-            let currentPoint = cropButtonDrag(sender, forEvent: event) else {
-                return
+                let currentPoint = event.touches(for: sender)?.first?.location(in: self) else { return }
+        
+        let lConstant = cropLeadingConstraint.constant - (currentPoint.x - touchPoint.x)
+        let rConstant = cropTrailingConstraint.constant - (currentPoint.x - touchPoint.x)
+        
+        if (lConstant <= 0 || currentPoint.x - touchPoint.x > 0) &&
+            (rConstant > 0 || currentPoint.x - touchPoint.x < 0) {
+            self.cropLeadingConstraint?.constant = lConstant
+            self.cropTrailingConstraint?.constant = rConstant
         }
         
-        dragCenterButton(currentPoint: currentPoint,
-                         touchPoint: touchPoint,
-                         constraintX: (lead: cropLeadingConstraint,
-                                       trail: cropTrailingConstraint),
-                         constraintY: (top: cropTopConstraint,
-                                       bottom: cropBottomConstraint)
-        )
+        let tConstant = cropTopConstraint.constant - (currentPoint.y - touchPoint.y)
+        let bConstant = cropBottomConstraint.constant - (currentPoint.y - touchPoint.y)
         
+        if (tConstant <= 0 || currentPoint.y - touchPoint.y > 0) &&
+            (bConstant > 0 || currentPoint.y - touchPoint.y < 0) {
+            self.cropTopConstraint?.constant = tConstant
+            self.cropBottomConstraint?.constant = bConstant
+        }
+        lineButtonTouchPoint = currentPoint
+        dimLayerMask(animated: false)
     }
+
     
-    func dragCenterButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint), constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragCenterButton(currentPoint : CGPoint,
+                          touchPoint : CGPoint,
+                          constraintX: (lead: NSLayoutConstraint,
+                                        trail: NSLayoutConstraint),
+                          constraintY: (top: NSLayoutConstraint,
+                                        bottom: NSLayoutConstraint)) {
         
         var moveFrame : Bool = false
 
@@ -1313,7 +1396,13 @@ extension ImageCropView {
         
     }
     
-    func dragLeftTopButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint), constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)){
+    func dragLeftTopButton(currentPoint : CGPoint,
+                           touchPoint : CGPoint,
+                           constraintX: (lead: NSLayoutConstraint,
+                                         trail: NSLayoutConstraint),
+                           constraintY: (top: NSLayoutConstraint,
+                                         bottom: NSLayoutConstraint)){
+        
         let hConstant = constraintX.lead.constant - (currentPoint.x - touchPoint.x)
         let vConstant = constraintY.top.constant - (currentPoint.y - touchPoint.y)
         if hConstant < self.cropLeadingInitialConstraint?.constant ?? 0 && vConstant < cropTopInitialConstraint?.constant ?? 0 {
@@ -1342,7 +1431,12 @@ extension ImageCropView {
 
     }
     
-    func dragLeftBottomButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint), constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragLeftBottomButton(currentPoint : CGPoint,
+                              touchPoint : CGPoint,
+                              constraintX: (lead: NSLayoutConstraint,
+                                            trail: NSLayoutConstraint),
+                              constraintY: (top: NSLayoutConstraint,
+                                            bottom: NSLayoutConstraint)) {
         
         let hConstant = constraintX.lead.constant - (currentPoint.x - touchPoint.x)
         let vConstant = constraintY.bottom.constant - (currentPoint.y - touchPoint.y)
@@ -1374,7 +1468,12 @@ extension ImageCropView {
         
     }
     
-    func dragRightTopButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint), constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragRightTopButton(currentPoint : CGPoint,
+                            touchPoint : CGPoint,
+                            constraintX: (lead: NSLayoutConstraint,
+                                          trail: NSLayoutConstraint),
+                            constraintY: (top: NSLayoutConstraint,
+                                          bottom: NSLayoutConstraint)) {
         
         let hConstant = constraintX.trail.constant - (currentPoint.x - touchPoint.x)
         let vConstant = constraintY.top.constant - (currentPoint.y - touchPoint.y)
@@ -1404,7 +1503,12 @@ extension ImageCropView {
         
     }
     
-    func dragRightBottomButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint), constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragRightBottomButton(currentPoint : CGPoint,
+                               touchPoint : CGPoint,
+                               constraintX: (lead: NSLayoutConstraint,
+                                             trail: NSLayoutConstraint),
+                               constraintY: (top: NSLayoutConstraint,
+                                             bottom: NSLayoutConstraint)) {
         
         let hConstant = constraintX.trail.constant - (currentPoint.x - touchPoint.x)
         let vConstant = constraintY.bottom.constant - (currentPoint.y - touchPoint.y)
@@ -1431,7 +1535,10 @@ extension ImageCropView {
         
     }
     
-    func dragLeftButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint)) {
+    func dragLeftButton(currentPoint : CGPoint,
+                        touchPoint : CGPoint,
+                        constraintX: (lead: NSLayoutConstraint,
+                                      trail: NSLayoutConstraint)) {
         
         let hConstant = constraintX.lead.constant - (currentPoint.x - touchPoint.x)
         if hConstant < self.cropLeadingInitialConstraint?.constant ?? 0 {
@@ -1455,7 +1562,10 @@ extension ImageCropView {
         
     }
     
-    func dragTopButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragTopButton(currentPoint : CGPoint,
+                       touchPoint : CGPoint,
+                       constraintY: (top: NSLayoutConstraint,
+                                     bottom: NSLayoutConstraint)) {
         
         let vConstant = constraintY.top.constant - (currentPoint.y - touchPoint.y)
         if vConstant < cropTopInitialConstraint?.constant ?? 0{
@@ -1479,7 +1589,10 @@ extension ImageCropView {
 
     }
     
-    func dragRightButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintX: (lead: NSLayoutConstraint, trail: NSLayoutConstraint)) {
+    func dragRightButton(currentPoint : CGPoint,
+                         touchPoint : CGPoint,
+                         constraintX: (lead: NSLayoutConstraint,
+                                       trail: NSLayoutConstraint)) {
         
         let hConstant = constraintX.trail.constant - (currentPoint.x - touchPoint.x)
         if hConstant > self.cropTrailingInitialConstraint?.constant ?? 0 {
@@ -1504,7 +1617,10 @@ extension ImageCropView {
 
     }
     
-    func dragBottomButton(currentPoint : CGPoint, touchPoint : CGPoint, constraintY: (top: NSLayoutConstraint, bottom: NSLayoutConstraint)) {
+    func dragBottomButton(currentPoint : CGPoint,
+                          touchPoint : CGPoint,
+                          constraintY: (top: NSLayoutConstraint,
+                                        bottom: NSLayoutConstraint)) {
         
         let vConstant = constraintY.bottom.constant - (currentPoint.y - touchPoint.y)
         if vConstant > cropBottomInitialConstraint?.constant ?? 0 {
@@ -1559,7 +1675,11 @@ class LineButton: UIButton {
     // MARK: Init
     init(_ type: ButtonLineType, buttonSize : CGSize) {
         self.type = type
-        super.init(frame: CGRect(x: 0, y: 0, width: buttonSize.width, height: buttonSize.height))
+        super.init(frame: CGRect(x: 0,
+                                 y: 0,
+                                 width: buttonSize.width,
+                                 height: buttonSize.height))
+        
         self.setTitle(nil, for: .normal)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.alpha = 0
