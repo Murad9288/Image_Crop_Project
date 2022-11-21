@@ -91,6 +91,7 @@
 		21B5B87E2928F41100AD783C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				21B5B8732928F3F800AD783C /* LaunchScreen.storyboard */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -100,7 +101,6 @@
 			children = (
 				21B5B8682928F3F600AD783C /* AppDelegate.swift */,
 				21B5B86A2928F3F600AD783C /* SceneDelegate.swift */,
-				21B5B8732928F3F800AD783C /* LaunchScreen.storyboard */,
 			);
 			path = System;
 			sourceTree = "<group>";
