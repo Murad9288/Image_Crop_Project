@@ -4,7 +4,7 @@
 //
 //  Created by Md Murad Hossain on 19/11/22.
 //
-/* MARK: Email --> muradhossianm01@gmail.com */
+/****    MARK: Email --> muradhossianm01@gmail.com  ****/
 
 
 import UIKit
@@ -55,10 +55,5 @@ class ViewController: UIViewController {
 
 }
 
-extension ViewController: CropPickerViewDelegate {
-    
-    internal func cropPickerView(_ cropPickerView: ImageCropView, didChange frame: CGRect) {
-        
-    }
-}
+
 
