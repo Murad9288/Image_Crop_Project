@@ -350,12 +350,14 @@ extension UIView {
         return constraint
     }
 }
+
 extension NSLayoutConstraint {
     func priority(_ value: CGFloat) -> NSLayoutConstraint {
         self.priority = UILayoutPriority(Float(value))
         return self
     }
 }
+
 extension UIBezierPath {
     @discardableResult
     func move(_ x: CGFloat, _ y: CGFloat) -> UIBezierPath{
