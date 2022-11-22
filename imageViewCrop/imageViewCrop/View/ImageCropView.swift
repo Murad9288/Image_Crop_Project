@@ -198,6 +198,7 @@ public class ImageCropView: UIView {
                         trailing = margin
                     }
                 }
+                
                 cropLeadingConstraint?.constant = leading
                 cropTrailingConstraint?.constant = trailing
                 cropTopConstraint?.constant = top
@@ -208,7 +209,9 @@ public class ImageCropView: UIView {
                 leftButton.isHidden = true
                 bottomButton.isHidden = true
                 rightButton.isHidden = true
+                
             } else {
+                
                 topButton.isHidden = false
                 leftButton.isHidden = false
                 bottomButton.isHidden = false
@@ -312,13 +315,11 @@ public class ImageCropView: UIView {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         initVars()
     }
     
     public override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        
         initVars()
     }
     
@@ -362,6 +363,7 @@ public class ImageCropView: UIView {
             let height = bounds.height + top - bottom
             let widthRate = width / bounds.width
             let heightRate = height / bounds.height
+            
             if widthRate > heightRate {
                 let margin = (bounds.width - (height * aspectRatio)) / 2
                 if margin > 0 {
@@ -372,11 +374,14 @@ public class ImageCropView: UIView {
                     top = -margin
                     bottom = margin
                 }
+                
             } else {
+                
                 let margin = (bounds.height - (width / aspectRatio)) / 2
                 if margin > 0 {
                     top = -margin
                     bottom = margin
+                    
                 } else {
                     let margin = (bounds.width - (height * aspectRatio)) / 2
                     leading = -margin
@@ -400,7 +405,9 @@ public class ImageCropView: UIView {
                 
                 self.layoutIfNeeded()
             }, completion: nil)
+            
         } else {
+            
             dimLayerMask(duration, animated: animated)
         }
     }
@@ -433,8 +440,10 @@ public class ImageCropView: UIView {
             
             if isMin {
                 let imageSize = self.imageView.frameForImageInImageViewAspectFit
+                
                 if self.isImageRateHeightGreaterThan(imageSize) {
                     point = CGPoint(x: 0, y: imageSize.origin.y)
+                    
                 } else {
                     point = CGPoint(x: imageSize.origin.x, y: 0)
                 }
@@ -735,12 +744,10 @@ extension ImageCropView {
         scrollView.delegate = self
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = true
-        
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         
         cropLineHidden(image)
-        
         cropLineColor = cropLineColor ?? .cyan
         scrollMinimumZoomScale = 0.3
         scrollMaximumZoomScale = 5
@@ -749,13 +756,19 @@ extension ImageCropView {
         dimBackgroundColor = dimBackgroundColor ?? UIColor(white: 0, alpha: 0.6)
         
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageDoubleTap(_:)))
+        
         doubleTapGesture.numberOfTapsRequired = 2
         scrollView.addGestureRecognizer(doubleTapGesture)
         
         lineButtonGroup.forEach { (button) in
             button.delegate = self
-            button.addTarget(self, action: #selector(cropButtonTouchDown(_:forEvent:)), for: .touchDown)
-            button.addTarget(self, action: #selector(cropButtonTouchUpInside(_:forEvent:)), for: .touchUpInside)
+            
+            button.addTarget(self,
+                             action: #selector(cropButtonTouchDown(_:forEvent:)),
+                             for: .touchDown)
+            button.addTarget(self,
+                             action: #selector(cropButtonTouchUpInside(_:forEvent:)),
+                             for: .touchUpInside)
         }
         
         leftTopButton.addTarget(self,
@@ -894,6 +907,7 @@ extension ImageCropView {
 
 extension ImageCropView {
     // Modify the dim screen mask.
+    
     func dimLayerMask(_ duration: TimeInterval = 0.4, animated: Bool) {
         guard let cropLeadingConstraint = self.cropLeadingConstraint,
             let cropTrailingConstraint = self.cropTrailingConstraint,
@@ -1039,19 +1053,16 @@ public class CropView: UIView {
     
     public override func awakeFromNib() {
         super.awakeFromNib()
-        
         initVars()
     }
     
     init() {
         super.init(frame: .zero)
-        
         initVars()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         initVars()
     }
     

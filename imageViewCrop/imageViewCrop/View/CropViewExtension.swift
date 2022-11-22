@@ -30,20 +30,20 @@ extension UIView {
     }
     
     func edgesConstraint(subView: UIView, constant: CGFloat = 0) {
-        self.leadingConstraint(subView: subView, constant: constant)
-        self.trailingConstraint(subView: subView, constant: constant)
-        self.topConstraint(subView: subView, constant: constant)
-        self.bottomConstraint(subView: subView, constant: constant)
+        leadingConstraint(subView: subView, constant: constant)
+        trailingConstraint(subView: subView, constant: constant)
+        topConstraint(subView: subView, constant: constant)
+        bottomConstraint(subView: subView, constant: constant)
     }
     
     func sizeConstraint(subView: UIView, constant: CGFloat = 0) {
-        self.widthConstraint(subView: subView, constant: constant)
-        self.heightConstraint(subView: subView, constant: constant)
+        widthConstraint(subView: subView, constant: constant)
+        heightConstraint(subView: subView, constant: constant)
     }
     
     func sizeConstraint(constant: CGFloat = 0) {
-        self.widthConstraint(constant: constant)
-        self.heightConstraint(constant: constant)
+        widthConstraint(constant: constant)
+        heightConstraint(constant: constant)
     }
     
     @discardableResult
@@ -58,7 +58,7 @@ extension UIView {
                                             attribute: .leading,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -74,7 +74,7 @@ extension UIView {
                                             attribute: .trailing,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -90,7 +90,7 @@ extension UIView {
                                             attribute: .top,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -106,7 +106,7 @@ extension UIView {
                                             attribute: .bottom,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -155,7 +155,7 @@ extension UIView {
                                             attribute: .leading,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -172,7 +172,7 @@ extension UIView {
                                             attribute: .trailing,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -189,7 +189,7 @@ extension UIView {
                                             attribute: .top,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -206,7 +206,7 @@ extension UIView {
                                             attribute: .bottom,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -224,7 +224,7 @@ extension UIView {
                                             attribute: .centerX,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -241,7 +241,7 @@ extension UIView {
                                             attribute: .centerY,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -258,7 +258,7 @@ extension UIView {
                                             attribute: .width,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -275,7 +275,7 @@ extension UIView {
                                             attribute: .height,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -291,7 +291,7 @@ extension UIView {
                                             attribute: .width,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -307,7 +307,7 @@ extension UIView {
                                             attribute: .height,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -322,7 +322,7 @@ extension UIView {
                                             attribute: .width,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
     
@@ -337,7 +337,7 @@ extension UIView {
                                             attribute: .height,
                                             multiplier: multiplier,
                                             constant: constant)
-        self.addConstraint(constraint)
+        addConstraint(constraint)
         return constraint
     }
 }
@@ -402,13 +402,21 @@ extension UIImageView {
                 let scale = self.frame.size.height / img.size.height
                 let width = scale * img.size.width
                 let topLeftX = (self.frame.size.width - width) * 0.5
-                return CGRect(x: topLeftX, y: 0, width: width, height: self.frame.size.height)
+                
+                return CGRect(x: topLeftX,
+                              y: 0,
+                              width: width,
+                              height: self.frame.size.height)
                 
             } else {
                 let scale = self.frame.size.width / img.size.width
                 let height = scale * img.size.height
                 let topLeftY = (self.frame.size.height - height) * 0.5
-                return CGRect(x: 0, y: topLeftY, width: self.frame.size.width, height: height)
+                
+                return CGRect(x: 0,
+                              y: topLeftY,
+                              width: self.frame.size.width,
+                              height: height)
             }
         }
         
@@ -425,14 +433,22 @@ extension UIImageView {
             let scaleFactor = imageViewSize.height / imageSize.height
             let width = imageSize.width * scaleFactor
             let topLeftX = (imageViewSize.width - width) * 0.5
-            return CGRect(x: topLeftX, y: 0, width: width, height: imageViewSize.height)
+            
+            return CGRect(x: topLeftX,
+                          y: 0,
+                          width: width,
+                          height: imageViewSize.height)
             
         } else {
             
             let scalFactor = imageViewSize.width / imageSize.width
             let height = imageSize.height * scalFactor
             let topLeftY = (imageViewSize.height - height) * 0.5
-            return CGRect(x: 0, y: topLeftY, width: imageViewSize.width, height: height)
+            
+            return CGRect(x: 0,
+                          y: topLeftY,
+                          width: imageViewSize.width,
+                          height: height)
         }
     }
 }
@@ -489,11 +505,19 @@ extension UIImage {
             imageOrientation == .right ||
             imageOrientation == .rightMirrored {
             
-            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+            ctx.draw(cgImage,
+                     in: CGRect(x: 0,
+                                y: 0,
+                                width: size.height,
+                                height: size.width))
             
         } else {
             
-            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            ctx.draw(cgImage,
+                     in: CGRect(x: 0,
+                                y: 0,
+                                width: size.width,
+                                height: size.height))
         }
         
         guard let makeImage = ctx.makeImage() else { return nil }

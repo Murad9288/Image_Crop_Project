@@ -44,6 +44,7 @@ class ViewController: UIViewController {
     @IBAction func resetHome(_ sender: UIButton){
         self.initialiseCropView()
     }
+    
     @IBAction func CropButton(_ sender: UIButton){
         imageCropView?.crop { (error, image) in
             if (error as NSError?) != nil {
