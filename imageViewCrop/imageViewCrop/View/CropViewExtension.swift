@@ -28,20 +28,20 @@ extension UIView {
     }
     
     func edgesConstraint(subView: UIView, constant: CGFloat = 0) {
-        leadingConstraint(subView: subView, constant: constant)
-        trailingConstraint(subView: subView, constant: constant)
-        topConstraint(subView: subView, constant: constant)
-        bottomConstraint(subView: subView, constant: constant)
+        self.leadingConstraint(subView: subView, constant: constant)
+        self.trailingConstraint(subView: subView, constant: constant)
+        self.topConstraint(subView: subView, constant: constant)
+        self.bottomConstraint(subView: subView, constant: constant)
     }
     
     func sizeConstraint(subView: UIView, constant: CGFloat = 0) {
-        widthConstraint(subView: subView, constant: constant)
-        heightConstraint(subView: subView, constant: constant)
+        self.widthConstraint(subView: subView, constant: constant)
+        self.heightConstraint(subView: subView, constant: constant)
     }
     
     func sizeConstraint(constant: CGFloat = 0) {
-        widthConstraint(constant: constant)
-        heightConstraint(constant: constant)
+        self.widthConstraint(constant: constant)
+        self.heightConstraint(constant: constant)
     }
     
     @discardableResult
@@ -49,7 +49,6 @@ extension UIView {
                            constant: CGFloat = 0,
                            multiplier: CGFloat = 1,
                            relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .leading,
                                             relatedBy: relatedBy,
@@ -66,7 +65,6 @@ extension UIView {
                             constant: CGFloat = 0,
                             multiplier: CGFloat = 1,
                             relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .trailing,
                                             relatedBy: relatedBy,
@@ -83,7 +81,6 @@ extension UIView {
                        constant: CGFloat = 0,
                        multiplier: CGFloat = 1,
                        relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .top,
                                             relatedBy: relatedBy,
@@ -100,7 +97,6 @@ extension UIView {
                           constant: CGFloat = 0,
                           multiplier: CGFloat = 1,
                           relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .bottom,
                                             relatedBy: relatedBy,
@@ -117,7 +113,6 @@ extension UIView {
                            constant: CGFloat = 0,
                            multiplier: CGFloat = 1,
                            relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .centerX,
                                             relatedBy: relatedBy,
@@ -134,7 +129,6 @@ extension UIView {
                            constant: CGFloat = 0,
                            multiplier: CGFloat = 1,
                            relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .centerY,
                                             relatedBy: relatedBy,
@@ -152,7 +146,6 @@ extension UIView {
                            constant: CGFloat = 0,
                            multiplier: CGFloat = 1,
                            relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .leading,
                                             relatedBy: relatedBy,
@@ -187,7 +180,6 @@ extension UIView {
                        constant: CGFloat = 0,
                        multiplier: CGFloat = 1,
                        relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .top,
                                             relatedBy: relatedBy,
@@ -205,7 +197,6 @@ extension UIView {
                           constant: CGFloat = 0,
                           multiplier: CGFloat = 1,
                           relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .bottom,
                                             relatedBy: relatedBy,
@@ -241,7 +232,6 @@ extension UIView {
                            constant: CGFloat = 0,
                            multiplier: CGFloat = 1,
                            relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .centerY,
                                             relatedBy: relatedBy,
@@ -259,7 +249,6 @@ extension UIView {
                          constant: CGFloat = 0,
                          multiplier: CGFloat = 1,
                          relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .width,
                                             relatedBy: relatedBy,
@@ -277,7 +266,6 @@ extension UIView {
                           constant: CGFloat = 0,
                           multiplier: CGFloat = 1,
                           relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: item,
                                             attribute: .height,
                                             relatedBy: relatedBy,
@@ -294,7 +282,6 @@ extension UIView {
                          constant: CGFloat = 0,
                          multiplier: CGFloat = 1,
                          relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .width,
                                             relatedBy: relatedBy,
@@ -311,7 +298,6 @@ extension UIView {
                           constant: CGFloat = 0,
                           multiplier: CGFloat = 1,
                           relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .height,
                                             relatedBy: relatedBy,
@@ -327,7 +313,6 @@ extension UIView {
     func widthConstraint(constant: CGFloat = 0,
                          multiplier: CGFloat = 1,
                          relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .width,
                                             relatedBy: relatedBy,
@@ -343,7 +328,6 @@ extension UIView {
     func heightConstraint(constant: CGFloat = 0,
                           multiplier: CGFloat = 1,
                           relatedBy: NSLayoutConstraint.Relation = .equal) -> NSLayoutConstraint {
-        
         let constraint = NSLayoutConstraint(item: self,
                                             attribute: .height,
                                             relatedBy: relatedBy,
@@ -355,14 +339,12 @@ extension UIView {
         return constraint
     }
 }
-
 extension NSLayoutConstraint {
     func priority(_ value: CGFloat) -> NSLayoutConstraint {
         self.priority = UILayoutPriority(Float(value))
         return self
     }
 }
-
 extension UIBezierPath {
     @discardableResult
     func move(_ x: CGFloat, _ y: CGFloat) -> UIBezierPath{
@@ -399,8 +381,10 @@ extension UIBezierPath {
         return self
     }
 }
+
 //MARK: Extending FrameworkClasses
 //MARK:UIIMageView Extension to get Frame
+
 extension UIImageView {
     var frameForImageInImageViewAspectFit: CGRect {
         if  let img = self.image {
@@ -437,5 +421,61 @@ extension UIImageView {
             let topLeftY = (imageViewSize.height - height) * 0.5
             return CGRect(x: 0, y: topLeftY, width: imageViewSize.width, height: height)
         }
+    }
+}
+
+// MARK: UIImage configuration
+
+extension UIImage {
+    var fixOrientation: UIImage? {
+        
+        if imageOrientation == .up { return self }
+        var transform = CGAffineTransform.identity
+
+        if imageOrientation == .down || imageOrientation == .downMirrored {
+            transform = transform.translatedBy(x: size.width, y: size.height)
+            transform = transform.rotated(by: CGFloat(Double.pi))
+        }
+
+        if imageOrientation == .left || imageOrientation == .leftMirrored {
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.rotated(by: CGFloat(Double.pi / 2.0))
+        }
+
+        if imageOrientation == .right || imageOrientation == .rightMirrored {
+            transform = transform.translatedBy(x: 0, y: size.height)
+            transform = transform.rotated(by: CGFloat(-Double.pi / 2.0))
+        }
+
+        if imageOrientation == .upMirrored || imageOrientation == .downMirrored {
+            transform = transform.translatedBy(x: size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        }
+
+        if imageOrientation == .leftMirrored || imageOrientation == .rightMirrored {
+            transform = transform.translatedBy(x: size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+        }
+
+        guard let cgImage = cgImage,
+            let colorSpace = cgImage.colorSpace else { return nil }
+
+        guard let ctx = CGContext(data: nil, width: Int(size.width), height: Int(size.height),
+                                  bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0,
+                                  space: colorSpace,
+                                  bitmapInfo: cgImage.bitmapInfo.rawValue) else { return nil }
+
+        ctx.concatenate(transform)
+
+        if imageOrientation == .left ||
+            imageOrientation == .leftMirrored ||
+            imageOrientation == .right ||
+            imageOrientation == .rightMirrored {
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+        } else {
+            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        }
+        guard let makeImage = ctx.makeImage() else { return nil }
+        return UIImage(cgImage: makeImage)
     }
 }
