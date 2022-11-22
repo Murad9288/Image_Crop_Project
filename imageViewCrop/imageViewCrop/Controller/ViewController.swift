@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     }
     
     func initialiseCropView() {
-        guard let image = UIImage(named: "26") else {return}
+        guard let image = UIImage(named: "29") else {return}
         deInitialiseCropView()
         imageCropView = ImageCropView(frame: CGRect(x: 0,
                                                     y: 0,

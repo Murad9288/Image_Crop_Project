@@ -33,7 +33,7 @@ public class ImageCropView: UIView {
     
     // MARK: Public Property
     
-    public var cropMinSize: CGFloat = 20
+    public var cropMinSize: CGFloat = 1
 
     // Set Image
     @IBInspectable
@@ -87,9 +87,11 @@ public class ImageCropView: UIView {
     // Background color of scroll
     @IBInspectable
     public var scrollBackgroundColor: UIColor? {
+        
         get {
             return scrollView.backgroundColor
         }
+        
         set {
             scrollView.backgroundColor = newValue
         }
@@ -739,7 +741,7 @@ extension ImageCropView {
         
         cropLineHidden(image)
         
-        cropLineColor = cropLineColor ?? .white
+        cropLineColor = cropLineColor ?? .cyan
         scrollMinimumZoomScale = 0.3
         scrollMaximumZoomScale = 5
         scrollBackgroundColor = scrollBackgroundColor ?? .black
@@ -938,7 +940,7 @@ public class CropView: UIView {
     private let margin: CGFloat = 0
     private let lineSize: CGFloat = 1
     
-    var lineColor: UIColor? = .white {
+    var lineColor: UIColor? = .cyan {
         willSet {
             topLineView.backgroundColor = newValue
             bottomLineView.backgroundColor = newValue

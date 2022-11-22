@@ -19,8 +19,10 @@ extension UIView {
     var imageWithView: UIImage? {
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
         if let cgContext = UIGraphicsGetCurrentContext() {
+            
             self.layer.render(in: cgContext)
         }
+        
         self.drawHierarchy(in: self.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -339,12 +341,14 @@ extension UIView {
         return constraint
     }
 }
+
 extension NSLayoutConstraint {
     func priority(_ value: CGFloat) -> NSLayoutConstraint {
         self.priority = UILayoutPriority(Float(value))
         return self
     }
 }
+
 extension UIBezierPath {
     @discardableResult
     func move(_ x: CGFloat, _ y: CGFloat) -> UIBezierPath{
@@ -375,6 +379,7 @@ extension UIBezierPath {
     
     @discardableResult
     func stroke(_ color: UIColor, lineWidth: CGFloat = 1) -> UIBezierPath {
+        
         color.set()
         self.lineWidth = lineWidth
         self.stroke()
@@ -387,14 +392,18 @@ extension UIBezierPath {
 
 extension UIImageView {
     var frameForImageInImageViewAspectFit: CGRect {
+        
         if  let img = self.image {
             let imageRatio = img.size.width / img.size.height
             let viewRatio = self.frame.size.width / self.frame.size.height
+            
             if(imageRatio < viewRatio) {
+                
                 let scale = self.frame.size.height / img.size.height
                 let width = scale * img.size.width
                 let topLeftX = (self.frame.size.width - width) * 0.5
                 return CGRect(x: topLeftX, y: 0, width: width, height: self.frame.size.height)
+                
             } else {
                 let scale = self.frame.size.width / img.size.width
                 let height = scale * img.size.height
@@ -402,6 +411,7 @@ extension UIImageView {
                 return CGRect(x: 0, y: topLeftY, width: self.frame.size.width, height: height)
             }
         }
+        
         return CGRect(x: 0, y: 0, width: 0, height: 0)
     }
     
@@ -410,12 +420,15 @@ extension UIImageView {
         guard let imageSize = self.image?.size else { return CGRect.zero }
         let imageRatio = imageSize.width / imageSize.height
         let imageViewRatio = imageViewSize.width / imageViewSize.height
+        
         if imageRatio < imageViewRatio {
             let scaleFactor = imageViewSize.height / imageSize.height
             let width = imageSize.width * scaleFactor
             let topLeftX = (imageViewSize.width - width) * 0.5
             return CGRect(x: topLeftX, y: 0, width: width, height: imageViewSize.height)
+            
         } else {
+            
             let scalFactor = imageViewSize.width / imageSize.width
             let height = imageSize.height * scalFactor
             let topLeftY = (imageViewSize.height - height) * 0.5
@@ -427,6 +440,7 @@ extension UIImageView {
 // MARK: UIImage configuration
 
 extension UIImage {
+    
     var fixOrientation: UIImage? {
         
         if imageOrientation == .up { return self }
@@ -460,8 +474,11 @@ extension UIImage {
         guard let cgImage = cgImage,
             let colorSpace = cgImage.colorSpace else { return nil }
 
-        guard let ctx = CGContext(data: nil, width: Int(size.width), height: Int(size.height),
-                                  bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: 0,
+        guard let ctx = CGContext(data: nil,
+                                  width: Int(size.width),
+                                  height: Int(size.height),
+                                  bitsPerComponent: cgImage.bitsPerComponent,
+                                  bytesPerRow: 0,
                                   space: colorSpace,
                                   bitmapInfo: cgImage.bitmapInfo.rawValue) else { return nil }
 
@@ -471,10 +488,14 @@ extension UIImage {
             imageOrientation == .leftMirrored ||
             imageOrientation == .right ||
             imageOrientation == .rightMirrored {
+            
             ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
+            
         } else {
+            
             ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         }
+        
         guard let makeImage = ctx.makeImage() else { return nil }
         return UIImage(cgImage: makeImage)
     }
